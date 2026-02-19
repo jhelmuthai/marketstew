@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --ink: #0F1B2D;
+  --ink-80: #1C2E45;
+  --ink-60: #334E68;
+  --ink-40: #627D98;
+  --ink-20: #9FB3C8;
+  --ink-10: #D9E2EC;
+  --ink-05: #F0F4F8;
+  --paper: #FAFBFC;
+  --white: #FFFFFF;
+  --stew: #D97706;
+  --stew-light: #F59E0B;
+  --stew-dark: #B45309;
+  --stew-bg: #FFFBEB;
+  --up: #059669;
+  --up-bg: #ECFDF5;
+  --down: #DC2626;
+  --down-bg: #FEF2F2;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  color: var(--ink-80);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+.mono {
+  font-family: 'JetBrains Mono', 'SF Mono', monospace;
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.ticker-animate { animation: ticker 35s linear infinite; }
+
+.card-lift { transition: box-shadow 0.2s ease, transform 0.2s ease; }
+.card-lift:hover { box-shadow: 0 4px 12px rgba(15,27,45,0.08); transform: translateY(-1px); }
+
+.data-row { transition: background 0.1s ease; }
+.data-row:hover { background: var(--ink-05); }
