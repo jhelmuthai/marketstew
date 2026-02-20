@@ -2,20 +2,21 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { SAMPLE_STOCKS, SECTORS } from '@/lib/stocks';
+import { SAMPLE_STOCKS, SECTORS, getActiveStocks } from '@/lib/stocks';
 
 export default function StocksPage() {
   const [activeSector, setActiveSector] = useState<string>('all');
+  const active = getActiveStocks();
 
   const filtered = activeSector === 'all'
-    ? SAMPLE_STOCKS
-    : SAMPLE_STOCKS.filter(s => s.sector === activeSector);
+    ? active
+    : active.filter(s => s.sector === activeSector);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-ink font-serif">AI Infrastructure Stocks</h1>
-        <p className="text-sm text-ink-40 mt-1">{SAMPLE_STOCKS.length} companies tracked across the AI supply chain</p>
+        <p className="text-sm text-ink-40 mt-1">{active.length} companies tracked across the AI supply chain</p>
       </div>
 
       {/* Sector filters */}

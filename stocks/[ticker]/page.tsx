@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import { SAMPLE_STOCKS, SECTORS } from '@/lib/stocks';
+import { SAMPLE_STOCKS, SECTORS, getActiveStocks } from '@/lib/stocks';
 import { notFound } from 'next/navigation';
 import EmailSignup from '@/components/EmailSignup';
 
 export function generateStaticParams() {
-  return SAMPLE_STOCKS.map(stock => ({ ticker: stock.ticker.toLowerCase() }));
+  return getActiveStocks().map(stock => ({ ticker: stock.ticker.toLowerCase() }));
 }
 
 export default function StockPage({ params }: { params: { ticker: string } }) {
@@ -13,7 +13,7 @@ export default function StockPage({ params }: { params: { ticker: string } }) {
 
   const sector = SECTORS.find(s => s.id === stock.sector);
   const up = stock.change >= 0;
-  const related = SAMPLE_STOCKS.filter(s => s.sector === stock.sector && s.ticker !== stock.ticker);
+  const related = SAMPLE_STOCKS.filter(s => s.sector === stock.sector && s.ticker !== stock.ticker && s.price > 0);
   const pctOfHigh = ((stock.price / stock.yearHigh) * 100).toFixed(1);
   const pctOfLow = ((stock.price / stock.yearLow) * 100 - 100).toFixed(1);
 

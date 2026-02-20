@@ -21,7 +21,7 @@ export default function AboutPage() {
         </p>
 
         <p>
-          Our coverage universe spans 250+ companies across 7 sectors, from trillion-dollar chipmakers to mid-cap specialists in liquid cooling and power distribution. We connect technology shifts to investment implications.
+          Our coverage universe spans 75 companies across 7 sectors, from trillion-dollar chipmakers to mid-cap specialists in liquid cooling and power distribution. We connect technology shifts to investment implications.
         </p>
 
         <h2 className="text-xl font-bold text-ink font-serif pt-4">Our Approach</h2>

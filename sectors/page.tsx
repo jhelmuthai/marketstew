@@ -1,17 +1,18 @@
 import Link from 'next/link';
-import { SAMPLE_STOCKS, SECTORS } from '@/lib/stocks';
+import { SAMPLE_STOCKS, SECTORS, getActiveStocks } from '@/lib/stocks';
 
 export default function SectorsPage() {
+  const active = getActiveStocks();
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-ink font-serif">AI Infrastructure Sectors</h1>
-        <p className="text-sm text-ink-40 mt-1">Seven critical layers of the supply chain powering artificial intelligence.</p>
+        <p className="text-sm text-ink-40 mt-1">Seven critical layers of the supply chain powering artificial intelligence. {active.length} companies tracked.</p>
       </div>
 
       <div className="space-y-4">
         {SECTORS.map(sector => {
-          const stocks = SAMPLE_STOCKS.filter(s => s.sector === sector.id);
+          const stocks = active.filter(s => s.sector === sector.id);
           const avgChange = stocks.length > 0
             ? stocks.reduce((acc, s) => acc + s.changePct, 0) / stocks.length
             : 0;

@@ -10,7 +10,7 @@ export default function Footer() {
               Market<span className="text-stew">Stew</span>
             </span>
             <p className="text-xs text-ink-40 mt-2 leading-relaxed">
-              AI infrastructure investing intelligence. Stock analysis and market data for the supply chain powering artificial intelligence.
+              AI infrastructure investing intelligence. 75 stocks across 7 sectors powering the AI supply chain.
             </p>
           </div>
 

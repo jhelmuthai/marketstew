@@ -1,11 +1,16 @@
 import Link from 'next/link';
 import EmailSignup from '@/components/EmailSignup';
-import { SAMPLE_STOCKS, SECTORS } from '@/lib/stocks';
+import { SAMPLE_STOCKS, SECTORS, getActiveStocks, getSectorStats } from '@/lib/stocks';
 
 export default function Home() {
-  const topMovers = [...SAMPLE_STOCKS].sort((a, b) => Math.abs(b.changePct) - Math.abs(a.changePct));
-  const gainers = SAMPLE_STOCKS.filter(s => s.change > 0).sort((a, b) => b.changePct - a.changePct);
-  const losers = SAMPLE_STOCKS.filter(s => s.change < 0).sort((a, b) => a.changePct - b.changePct);
+  const active = getActiveStocks();
+  const topMovers = [...active].sort((a, b) => Math.abs(b.changePct) - Math.abs(a.changePct));
+  const gainers = active.filter(s => s.change > 0).sort((a, b) => b.changePct - a.changePct);
+  const losers = active.filter(s => s.change < 0).sort((a, b) => a.changePct - b.changePct);
+  const topByMarketCap = [...active].sort((a, b) => {
+    const parse = (s: string) => { const n = parseFloat(s.replace(/[$,]/g, '')); if (s.includes('T')) return n * 1000; return n; };
+    return parse(b.marketCap) - parse(a.marketCap);
+  });
 
   return (
     <>
@@ -19,7 +24,7 @@ export default function Home() {
                 <span className="text-stew">&amp; Market Intelligence</span>
               </h1>
               <p className="text-sm text-ink-40 leading-relaxed max-w-lg mb-5">
-                Tracking the entire AI supply chain — semiconductors, data centers, networking, power, cooling, and construction. 250+ stocks analyzed. Updated daily.
+                Tracking the entire AI supply chain — semiconductors, data centers, networking, power, cooling, and construction. {active.length} stocks analyzed. Updated daily.
               </p>
               <EmailSignup variant="hero" />
             </div>
@@ -33,7 +38,7 @@ export default function Home() {
               <div className="grid grid-cols-3 gap-3">
                 {[
                   { label: 'Sectors', value: '7' },
-                  { label: 'Stocks', value: '250+' },
+                  { label: 'Stocks', value: `${active.length}` },
                   { label: 'Updated', value: 'Daily' },
                 ].map(stat => (
                   <div key={stat.label} className="text-center">
@@ -90,10 +95,10 @@ export default function Home() {
                   <div className="col-span-2 text-right">MCap</div>
                 </div>
 
-                {SAMPLE_STOCKS.map((stock, i) => (
+                {topByMarketCap.slice(0, 12).map((stock, i) => (
                   <Link key={stock.ticker} href={`/stocks/${stock.ticker.toLowerCase()}`}>
                     <div className={`grid grid-cols-12 gap-2 px-4 py-3 data-row cursor-pointer ${
-                      i < SAMPLE_STOCKS.length - 1 ? 'border-b border-ink-05' : ''
+                      i < 11 ? 'border-b border-ink-05' : ''
                     }`}>
                       <div className="col-span-3">
                         <span className="font-mono font-semibold text-ink text-sm">{stock.ticker}</span>
@@ -164,9 +169,9 @@ export default function Home() {
             <div className="bg-white rounded-lg border border-ink-10 p-4">
               <h3 className="text-[11px] font-semibold text-ink-40 uppercase tracking-wider mb-3">Sectors</h3>
               <div className="space-y-2">
-                {SECTORS.filter(s => s.count > 0).map(sector => {
-                  const sectorStocks = SAMPLE_STOCKS.filter(s => s.sector === sector.id);
-                  const avgChange = sectorStocks.reduce((acc, s) => acc + s.changePct, 0) / sectorStocks.length;
+                {SECTORS.map(sector => {
+                  const { count, avgChange } = getSectorStats(sector.id);
+                  if (count === 0) return null;
                   const up = avgChange >= 0;
 
                   return (
@@ -234,7 +239,7 @@ export default function Home() {
             {/* Coverage universe note */}
             <div className="border-l-2 border-stew pl-4 py-1">
               <p className="text-[12px] text-ink-40 leading-relaxed">
-                <span className="font-semibold text-ink-60">Coverage universe:</span> 250+ companies across semiconductors, data center REITs, networking, power &amp; cooling, construction, servers, and hyperscalers.
+                <span className="font-semibold text-ink-60">Coverage universe:</span> {active.length} companies across semiconductors, data center REITs, networking, power &amp; cooling, construction, servers, and hyperscalers.
               </p>
             </div>
           </div>
