@@ -8,6 +8,10 @@ const TICKER_DATA = [
   { sym: 'VRT', pct: '+3.67' }, { sym: 'ANET', pct: '+1.91' },
   { sym: 'DLR', pct: '-0.52' }, { sym: 'ETN', pct: '+0.65' },
   { sym: 'EQIX', pct: '+0.63' }, { sym: 'PWR', pct: '+0.47' },
+  { sym: 'AMD', pct: '+1.83' }, { sym: 'TSM', pct: '+0.95' },
+  { sym: 'SMCI', pct: '+5.78' }, { sym: 'CEG', pct: '+1.74' },
+  { sym: 'MSFT', pct: '+0.68' }, { sym: 'COHR', pct: '+4.07' },
+  { sym: 'DELL', pct: '+2.06' }, { sym: 'MRVL', pct: '+3.63' },
 ];
 
 export default function Header() {
