@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
     }
 
     const BREVO_API_KEY = process.env.BREVO_API_KEY;
-    const BREVO_LIST_ID = parseInt(process.env.BREVO_LIST_ID || '2');
+    const BREVO_LIST_ID = Number(process.env.BREVO_LIST_ID) || 2;
 
     if (!BREVO_API_KEY) {
       console.error('BREVO_API_KEY not set');
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
       },
       body: JSON.stringify({
         email,
-        listIds: [BREVO_LIST_ID],
+        listIds: [Number(BREVO_LIST_ID)],
         updateEnabled: true,
       }),
     });
