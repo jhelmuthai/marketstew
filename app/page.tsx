@@ -33,7 +33,9 @@ export default function Home() {
             <div className="lg:col-span-2 bg-ink-05 rounded-lg p-4">
               <div className="flex items-center justify-between mb-3">
                 <h2 className="text-[11px] font-semibold text-ink-40 uppercase tracking-wider">Market Snapshot</h2>
-                <span className="text-[10px] text-ink-20 font-mono">Feb 17, 2026</span>
+                <span className="text-[10px] text-ink-20 font-mono">
+                  {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                </span>
               </div>
               <div className="grid grid-cols-3 gap-3">
                 {[
