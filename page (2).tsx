@@ -34,7 +34,7 @@ export default function Home() {
               <div className="flex items-center justify-between mb-3">
                 <h2 className="text-[11px] font-semibold text-ink-40 uppercase tracking-wider">Market Snapshot</h2>
                 <span className="text-[10px] text-ink-20 font-mono">
-                  {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                  {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'America/New_York' })}
                 </span>
               </div>
               <div className="grid grid-cols-3 gap-3">
