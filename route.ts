@@ -9,12 +9,19 @@ export async function POST(request: NextRequest) {
     }
 
     const BREVO_API_KEY = process.env.BREVO_API_KEY;
-    const BREVO_LIST_ID = Number(process.env.BREVO_LIST_ID) || 2;
 
     if (!BREVO_API_KEY) {
       console.error('BREVO_API_KEY not set');
       return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
     }
+
+    const body = {
+      email: email,
+      listIds: [2],
+      updateEnabled: true,
+    };
+
+    console.log('Sending to Brevo:', JSON.stringify(body));
 
     const response = await fetch('https://api.brevo.com/v3/contacts', {
       method: 'POST',
@@ -23,25 +30,20 @@ export async function POST(request: NextRequest) {
         'content-type': 'application/json',
         'api-key': BREVO_API_KEY,
       },
-      body: JSON.stringify({
-        email,
-        listIds: [Number(BREVO_LIST_ID)],
-        updateEnabled: true,
-      }),
+      body: JSON.stringify(body),
     });
 
-    if (response.ok || response.status === 204) {
+    const data = await response.json();
+    console.log('Brevo response:', response.status, JSON.stringify(data));
+
+    if (response.ok || response.status === 201) {
       return NextResponse.json({ success: true });
     }
 
-    const data = await response.json();
-
-    // Brevo returns "duplicate_parameter" if already subscribed — still a success
     if (data.code === 'duplicate_parameter') {
       return NextResponse.json({ success: true, existing: true });
     }
 
-    console.error('Brevo error:', data);
     return NextResponse.json({ error: 'Subscription failed' }, { status: 500 });
 
   } catch (error) {
