@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
 
     const body = {
       email: email,
-      listIds: [2],
+      listIds: [3],
       updateEnabled: true,
     };
 
