@@ -38,10 +38,10 @@ export default function StocksPage() {
 
       {/* Scrollable table wrapper */}
       <div className="bg-white rounded-lg border border-ink-10 overflow-x-auto">
-        <div className="min-w-[700px]">
+        <div className="min-w-[800px]">
 
           {/* Header */}
-          <div className="grid grid-cols-12 gap-2 px-4 py-2.5 bg-ink-05 text-[10px] font-semibold text-ink-40 uppercase tracking-wider border-b border-ink-10">
+          <div className="grid grid-cols-12 gap-4 px-4 py-2.5 bg-ink-05 text-[10px] font-semibold text-ink-40 uppercase tracking-wider border-b border-ink-10">
             <div className="col-span-2">Ticker</div>
             <div className="col-span-3">Company</div>
             <div className="col-span-2">Sector</div>
@@ -55,7 +55,7 @@ export default function StocksPage() {
           {/* Rows */}
           {filtered.map((stock, i) => (
             <Link key={stock.ticker} href={`/stocks/${stock.ticker.toLowerCase()}`}>
-              <div className={`grid grid-cols-12 gap-2 px-4 py-3 data-row cursor-pointer ${
+              <div className={`grid grid-cols-12 gap-4 px-4 py-3 data-row cursor-pointer ${
                 i < filtered.length - 1 ? 'border-b border-ink-05' : ''
               }`}>
                 <div className="col-span-2 font-mono font-semibold text-ink text-sm">{stock.ticker}</div>
